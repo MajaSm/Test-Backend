@@ -23,8 +23,8 @@ namespace Test.Controllers
 
       var emailRegex = new Regex(@"^[^\s@]+@[^\s@]+\.[^\s@]+$");
       bool isValidEmail = emailRegex.IsMatch(userObj.Email);
-      
-      bool isValidDate = DateTime.TryParseExact(userObj.DateOfBirth, "d.M.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
+      string[] dateFormats = { "d.M.yyyy", "d.M.yyyy." };
+      bool isValidDate = DateTime.TryParseExact(userObj.DateOfBirth, dateFormats, CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
     
 
       var numberRegex = new Regex(@"^\+?\d+$");
@@ -32,7 +32,7 @@ namespace Test.Controllers
 
      if (isValidDate)
       {
-        DateTime date = DateTime.ParseExact(userObj.DateOfBirth, "d.M.yyyy", CultureInfo.InvariantCulture);
+        DateTime date = DateTime.ParseExact(userObj.DateOfBirth, dateFormats, CultureInfo.InvariantCulture);
         int year = date.Year;
         isValidDate = year <= DateTime.Now.Year;
       }
